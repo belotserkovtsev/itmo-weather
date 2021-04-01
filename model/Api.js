@@ -16,14 +16,9 @@ class Api {
                 })
 
             curl.setOpt('FOLLOWLOCATION', true);
-            curl.setOpt(Curl.option.HTTPHEADER, ['x-rapidapi-key: d5d8135a54mshd320d2f046aa089p1025c7jsnbd7c07d68604'])
+            curl.setOpt(Curl.option.HTTPHEADER, ['x-rapidapi-key: 62c6a7b44cmshd35b7189c4cc428p199b4ejsn70c836a18c59'])
 
             curl.on('end', function (statusCode, data, headers) {
-                // console.info(statusCode);
-                // console.info('---');
-                // console.info(JSON.parse(data));
-                // console.info('---');
-                // console.info(this.getInfo( 'TOTAL_TIME'));
                 resolve({
                     json: JSON.parse(data),
                     status: statusCode

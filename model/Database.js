@@ -95,9 +95,9 @@ class Database {
                     connection && pool._freeConnections.indexOf(connection) === -1 && connection.release()
                     return reject(new Exception(1, err.message))
                 }
-                let query = 'replace into user_city (user_id, city_name) values (?, ?)'
+                let query = 'insert into user_city (user_id, city_name) values (?, ?)'
 
-                connection.query(query, [userId, city], (err, rows) => {
+                connection.query(query, [userId, city, userId], (err, rows) => {
                     pool._freeConnections.indexOf(connection) === -1 && connection.release()
 
                     if(err){

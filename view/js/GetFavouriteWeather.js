@@ -5,7 +5,7 @@ citiesForId(getCookie('id'))
             // console.log(localStorage.getItem(i))
             setTimeout( () => {
                 // console.log(cities[i])
-                requestFor(cities[i])
+                requestFor(cities[i], false)
             }, 2000 * i)
         }
     })
@@ -20,7 +20,7 @@ document.getElementById("submitCity").addEventListener("click", () => {
       citiesForId(getCookie('id'))
           .then(cities => {
               if(!cities.includes(city))
-                  requestFor(city)
+                  requestFor(city, true)
           })
           .catch(err => {
               console.log(err.message)
@@ -48,7 +48,7 @@ function getCookie(name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function requestFor(city) {
+function requestFor(city, doWrite = false) {
   let wrapperBlock = document.getElementById("weatherDataWrapper")
 
   let blockToAppend = document.querySelector('#weatherBlockLoadingTemplate')
@@ -82,10 +82,12 @@ function requestFor(city) {
             // if(localStorage.getItem(city) === null) {
             //   localStorage.setItem(city, city);
             // }
-            let postDataRequest = new XMLHttpRequest()
-            postDataRequest.open('POST', '/favourites', true)
-            postDataRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            postDataRequest.send(`userId=${getCookie('id')}&city=${city.toLowerCase()}`)
+            if(doWrite) {
+                let postDataRequest = new XMLHttpRequest()
+                postDataRequest.open('POST', '/favourites', true)
+                postDataRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                postDataRequest.send(`userId=${getCookie('id')}&city=${city.toLowerCase()}`)
+            }
 
             let remove = wbLoaded.querySelectorAll('button')
             remove[0].addEventListener("click", () => {
