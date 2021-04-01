@@ -16,8 +16,16 @@ document.getElementById("submitCity").addEventListener("click", () => {
   let city = document.getElementById('inputCity').value.toLowerCase()
   document.getElementById('inputCity').value = ""
   if(city.trim().length > 0 && !requestHistory.includes(city)) {
-    requestHistory.push(city)
-    requestFor(city)
+      requestHistory.push(city)
+      citiesForId(getCookie('id'))
+          .then(cities => {
+              if(!cities.includes(city))
+                  requestFor(city)
+          })
+          .catch(err => {
+              console.log(err.message)
+          })
+
   }
 })
 
